@@ -1,8 +1,11 @@
 import discord
+import os
 from discord.ext import commands
 import amazon_sku_tracker
 
-DISCORD_BOT_TOKEN = "MTA5ODM3NTk4NzAyNjIxNTA5Mg.GS8CdI.DP07l4UkpgD4twepjR42A4dIJZn2mUMC05CT-o"  # Replace with your bot token
+DISCORD_BOT_TOKEN =   my_secret = os.environ['BOT_TOKEN']
+# Replace with your bot token
+
 
 intents = discord.Intents.default()
 intents.typing = False
@@ -11,7 +14,6 @@ intents.guild_messages = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-@bot.command(name='add_storefront')
 @bot.command(name='add_storefront')
 async def add_storefront(ctx, storefront_url: str):
     if storefront_url not in amazon_sku_tracker.storefront_links:
