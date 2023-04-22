@@ -12,10 +12,14 @@ intents.guild_messages = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 @bot.command(name='add_storefront')
+@bot.command(name='add_storefront')
 async def add_storefront(ctx, storefront_url: str):
     if storefront_url not in amazon_sku_tracker.storefront_links:
         amazon_sku_tracker.storefront_links.append(storefront_url)
         response = f"Added new storefront: {storefront_url}"
+    else:
+        response = f"Storefront {storefront_url} is already being tracked."
+    await ctx.send(response)
     else:
         response = f"Storefront {storefront_url} is already being tracked."
     await ctx.send(response)
