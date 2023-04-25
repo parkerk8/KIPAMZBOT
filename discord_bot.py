@@ -3,16 +3,20 @@ import discord
 from discord.ext import commands, tasks
 import amazon_sku_tracker
 
-secret_key = os.environ["DISCORD_BOT_TOKEN"]  # Get your bot token from an environment variable
+# Retrieve the bot token from an environment variable named "DISCORD_BOT_TOKEN"
+secret_key = os.environ["DISCORD_BOT_TOKEN"]  
 
+# Configure Discord client to use only the necessary intents to conserve resources
 intents = discord.Intents.default()
 intents.typing = False
 intents.presences = False
 intents.messages = True
 intents.message_content = True
 
+# Initialize the bot object with the specified command prefix and intents
 bot = commands.Bot(command_prefix='!', intents=intents)
 
+# Define the command to add a storefront URL to the list of websites being tracked by the Amazon SKU tracker
 @bot.command(name='add_storefront')
 async def add_storefront(ctx, storefront_url: str):
     print(f"Processing !add_storefront command for {storefront_url}")
@@ -32,15 +36,18 @@ async def sku_tracking_job():
     else:
         print("Failed to find the Discord channel.")
 
+# Define an event handler to be called once the bot is ready
 @bot.event
 async def on_ready():
     print("Bot is ready.")
 
+# Define an event handler to log and display command errors to the channel where the command was issued
 @bot.event
 async def on_command_error(ctx, error):
     print(f"Error occurred while processing command: {error}")
     await ctx.send(f"An error occurred: {error}")
 
+# Begin the bot's execution
 print("Bot is starting...")
 bot.run(secret_key)
 
